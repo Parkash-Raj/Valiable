@@ -1,50 +1,52 @@
-import java.util.*;
-class CurrencyConverter {
-     static final Map<String, Double> exchangeRates = new HashMap<>();
+import java.util.Scanner;
 
-    static {
-
-        exchangeRates.put("PKR", 1.0);
-        exchangeRates.put("USD", 0.003567);
-        exchangeRates.put("GBP", 0.73);
-    }
-
+class StdGradeCalculator {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
 
-        System.out.println("CURRENCY CONVERTER");
+        System.out.println("STUDENT GRADE CALCULATOR");
+
+        System.out.print("Enter the number of subjects: ");
+        int numSubjects = scanner.nextInt();
 
 
-        System.out.println("Available Currencies:");
-        for (String currency : exchangeRates.keySet()) {
-            System.out.print(currency + " ");
+        int totalMarks = 0;
+        for (int i = 1; i <= numSubjects; i++) {
+            System.out.print("Enter marks for Subject " + i + " (out of 100): ");
+            int marks = scanner.nextInt();
+
+
+            if (marks < 0 || marks > 100) {
+                System.out.println("Invalid marks. Marks should be between 0 and 100.");
+                i--;
+                continue;
+            }
+
+            totalMarks += marks;
         }
-        System.out.println();
 
 
-        System.out.print("Enter the base currency: ");
-        String baseCurrency = scanner.next().toUpperCase();
+        double averagePercentage = (double) totalMarks / numSubjects;
 
 
-        System.out.print("Enter the target currency: ");
-        String targetCurrency = scanner.next().toUpperCase();
-
-
-        System.out.print("Enter the amount to convert: ");
-        double amount = scanner.nextDouble();
-
-
-        if (exchangeRates.containsKey(baseCurrency) && exchangeRates.containsKey(targetCurrency)) {
-            double exchangeRate = exchangeRates.get(targetCurrency) / exchangeRates.get(baseCurrency);
-            double convertedAmount = amount * exchangeRate;
-
-
-            System.out.println("\nCONVERSION RESULT:");
-            System.out.println("Amount in " + baseCurrency + ": " + amount);
-            System.out.println("Converted Amount in " + targetCurrency + ": " + convertedAmount);
+        char grade;
+        if (averagePercentage >= 90) {
+            grade = 'A';
+        } else if (averagePercentage >= 80) {
+            grade = 'B';
+        } else if (averagePercentage >= 70) {
+            grade = 'C';
+        } else if (averagePercentage >= 60) {
+            grade = 'D';
         } else {
-            System.out.println("Invalid currencies. Please choose from the available currencies.");
+            grade = 'F';
         }
+
+
+        System.out.println("\nRESULTS:");
+        System.out.println("Total Marks: " + totalMarks);
+        System.out.println("Average Percentage: " + averagePercentage + "%");
+        System.out.println("Grade: " + grade);
 
 
     }
