@@ -1,106 +1,50 @@
 import java.util.*;
+class CurrencyConverter {
+     static final Map<String, Double> exchangeRates = new HashMap<>();
 
-class NumberGame {
+    static {
 
+        exchangeRates.put("PKR", 1.0);
+        exchangeRates.put("USD", 0.003567);
+        exchangeRates.put("GBP", 0.73);
+    }
 
     public static void main(String[] args) {
-
-
         Scanner scanner = new Scanner(System.in);
-        Random random = new Random();
 
-        int lowerBound = 1;
-        int upperBound = 100;
-        int maxAttempts = 10;
-
-        int score = 0;
+        System.out.println("CURRENCY CONVERTER");
 
 
-
-
-        System.out.println("Welcome to the Number Guessing Game!");
-
-        do
-        {
-
-
-
-
-            int targetNumber = random.nextInt(upperBound - lowerBound + 1) + lowerBound;
-
-            int attempts = 0;
-
-            boolean hasGuessedCorrectly = false;
-
-            System.out.println("\nNew round! Try to guess the number between " + lowerBound + " and " + upperBound + ".");
-
-
-
-
-
-            while (attempts < maxAttempts)
-            {
-
-                System.out.print("Enter your guess: ");
-
-                int userGuess = scanner.nextInt();
-                attempts++;
-
-
-                if (userGuess == targetNumber) {
-
-                    System.out.println("Congratulations! You guessed the correct number in " + attempts + " attempts.");
-
-                    hasGuessedCorrectly = true;
-
-
-                    break;
-
-                }
-                else if (userGuess < targetNumber) {
-
-                    System.out.println("Too low! Try again.");
-
-
-
-                }
-                else {
-
-                    System.out.println("Too high! Try again.");
-                }
-            }
-
-
-
-
-            if (!hasGuessedCorrectly)
-            {
-                System.out.println("Sorry! You've reached the maximum number of attempts. The correct number was: " + targetNumber);
-            }
-            else
-            {
-                score++;
-
-
-
-            }
-
-            System.out.print("Do you want to play again? (yes/no): ");
-
-
-
-
+        System.out.println("Available Currencies:");
+        for (String currency : exchangeRates.keySet()) {
+            System.out.print(currency + " ");
         }
-
-        while (scanner.next().equalsIgnoreCase("yes"));
-
+        System.out.println();
 
 
-        System.out.println("Thanks for playing! Your total score is: " + score);
+        System.out.print("Enter the base currency: ");
+        String baseCurrency = scanner.next().toUpperCase();
 
 
+        System.out.print("Enter the target currency: ");
+        String targetCurrency = scanner.next().toUpperCase();
 
 
+        System.out.print("Enter the amount to convert: ");
+        double amount = scanner.nextDouble();
+
+
+        if (exchangeRates.containsKey(baseCurrency) && exchangeRates.containsKey(targetCurrency)) {
+            double exchangeRate = exchangeRates.get(targetCurrency) / exchangeRates.get(baseCurrency);
+            double convertedAmount = amount * exchangeRate;
+
+
+            System.out.println("\nCONVERSION RESULT:");
+            System.out.println("Amount in " + baseCurrency + ": " + amount);
+            System.out.println("Converted Amount in " + targetCurrency + ": " + convertedAmount);
+        } else {
+            System.out.println("Invalid currencies. Please choose from the available currencies.");
+        }
 
 
     }
